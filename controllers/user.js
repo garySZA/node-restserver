@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const Usuario = require('../models/usuario');
 
 const getUsers = async (req = request, res = response) => {
-    const { limit=5, desde=0 } = req.query;
+    const { limit=100, desde=0 } = req.query;
     const query = { estado: true }
 
     const [ total, usuarios ] = await Promise.all([
@@ -61,11 +61,11 @@ const patchUser = (req, res) => {
     });
 };
 
-const deleteUser = async (req, res) => {
+const deleteUser = async (req, res=response) => {
     const { id } = req.params;
 
     const usuario = await Usuario.findByIdAndUpdate(id, {estado: false});
-    
+
     res.json(usuario);
 };
 
